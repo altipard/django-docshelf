@@ -66,7 +66,8 @@ The stable identity users link to. `slug` is unique and forms the permalink.
 | `form` | external URL | "Online form ↗" |
 
 A kind declares whether its versions need a file or a URL, its label and icon. Projects can
-register further kinds (for example "video" or "map").
+register further kinds (for example "video" or "map") with `docshelf.kinds.register()` in
+`AppConfig.ready()`. The model field uses callable choices, so new kinds need no migration.
 
 `is_published` hides an entry entirely. Revisions and drafts of the entry metadata are out of
 scope for v0.1 (ADR-0007); versions already carry the history of the content.
@@ -152,7 +153,6 @@ a separate storage, by default outside `MEDIA_ROOT` (ADR-0003).
 | `DOCSHELF_SERVE_BACKEND` | `"django"` | see Serving |
 | `DOCSHELF_X_ACCEL_PREFIX` | `"/protected/docshelf/"` | internal nginx location |
 | `DOCSHELF_ACCESS_POLICY` | `"docshelf.access.DefaultPolicy"` | see Access |
-| `DOCSHELF_KINDS` | built-in kinds | registry extension |
 | `DOCSHELF_SHOW_EXPIRED` | `False` | list entries without a current version |
 
 ## Import
