@@ -19,11 +19,21 @@ INSTALLED_APPS = [
 
 if HAS_WAGTAIL:
     INSTALLED_APPS += [
+        "wagtail.contrib.routable_page",
+        "wagtail.sites",
+        "wagtail.users",
+        "wagtail.snippets",
+        "wagtail.documents",
+        "wagtail.images",
+        "wagtail.search",
+        "wagtail.admin",
+        "wagtail",
         "taggit",
         "modelcluster",
-        "wagtail",
         "docshelf.contrib.wagtail",
     ]
+    WAGTAIL_SITE_NAME = "docshelf tests"
+    WAGTAILADMIN_BASE_URL = "http://testserver"
 
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",

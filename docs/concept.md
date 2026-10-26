@@ -136,15 +136,20 @@ a separate storage, by default outside `MEDIA_ROOT` (ADR-0003).
 
 ## Wagtail integration (`docshelf.contrib.wagtail`)
 
-- `SnippetViewSet` for entries (versions as inline panel) and categories, with list filters
-  for category, kind, audience and "review overdue"
-- `ChooserViewSet` for entries
-- StreamField blocks: `EntryChooserBlock` (single card), `CategoryListBlock` (all entries of a
-  category)
-- Rich text link type `docshelf` that links to the permalink
-- `LibraryPage` (`RoutablePageMixin`) that serves the URLs above below any page in the tree
-- Search index for entries, reference index registration, admin log entries
-- Dashboard panel "review overdue"
+- Snippets for entries (versions as inline panel, `Entry` is a `ClusterableModel`) and
+  categories, grouped under a "Documents" menu, with list filters for category, kind, audience
+  and published state. The category form places the node in the tree (parent field).
+- The snippet chooser picks entries and categories.
+- StreamField blocks: `EntryBlock` (one card) and `CategoryBlock` (all entries of a category,
+  optionally with subcategories). Both respect the access policy of the visitor.
+- `LibraryPage` (`RoutablePageMixin`) serves list, permalink, history and files below a page.
+  `root_category` limits a page to a subtree. Set
+  `DOCSHELF_ROUTER = "docshelf.contrib.wagtail.routing.LibraryPageRouter"` so that
+  `Entry.get_absolute_url()` points below the page; with several pages the most specific root
+  category wins. Wagtail only routes slash-terminated paths without dots, so file URLs below a
+  page are `/<slug>/v/<version_id>/`; the file name comes from `Content-Disposition`.
+- Dashboard panel "Documents due for review" for users who may change entries.
+- Snippet actions are logged by Wagtail; registered snippets take part in the reference index.
 
 ## Settings
 
@@ -155,6 +160,7 @@ a separate storage, by default outside `MEDIA_ROOT` (ADR-0003).
 | `DOCSHELF_X_ACCEL_PREFIX` | `"/protected/docshelf/"` | internal nginx location |
 | `DOCSHELF_ACCESS_POLICY` | `"docshelf.access.DefaultPolicy"` | see Access |
 | `DOCSHELF_SHOW_EXPIRED` | `False` | list entries without a current version |
+| `DOCSHELF_ROUTER` | `"docshelf.routing.NamespaceRouter"` | where entry URLs point, see Wagtail integration |
 
 ## Import
 
@@ -194,7 +200,7 @@ the upstream support windows; a dropped version is a minor release.
 4. Permalink, history, file serving with `django` and `x-accel` backends
 5. Access: `public`, `authenticated`, `groups`, policy hook
 6. List template with category grouping and client-side filter, overridable templates
-7. Wagtail: snippets, chooser, blocks, rich text link, `LibraryPage`
+7. Wagtail: snippets, chooser, blocks, `LibraryPage`, dashboard panel
 8. Import command with `csv` and `wagtaildocs` sources
 9. de/en translations, tests across the matrix, demo project, docs
 
@@ -205,3 +211,7 @@ the upstream support windows; a dropped version is a minor release.
   additive (ADR-0003).
 - Revisions and drafts for entry metadata in Wagtail, probably via swappable models
   (ADR-0007).
+- Rich text link type for entries. Needs a Draftail plugin (JavaScript); until then editors
+  link the permalink as an ordinary link.
+- Wagtail search index for entries. The core model cannot inherit `index.Indexed` without
+  depending on Wagtail; needs the same solution as revisions.

@@ -6,12 +6,14 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import F, Q
-from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
 from treebeard.mp_tree import MP_Node
 
 from . import kinds, status
+from .routing import get_router
 from .storage import get_storage, version_upload_to
 
 
@@ -42,7 +44,7 @@ class EntryQuerySet(models.QuerySet):
         return self.prefetch_related("versions")
 
 
-class Entry(models.Model):
+class Entry(ClusterableModel):
     title = models.CharField(_("title"), max_length=255)
     slug = models.SlugField(
         _("slug"),
@@ -96,10 +98,10 @@ class Entry(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("docshelf:permalink", args=[self.slug])
+        return get_router().permalink(self)
 
     def get_history_url(self):
-        return reverse("docshelf:history", args=[self.slug])
+        return get_router().history(self)
 
     @property
     def kind_obj(self):
@@ -132,7 +134,7 @@ class Entry(models.Model):
 
 
 class Version(models.Model):
-    entry = models.ForeignKey(
+    entry = ParentalKey(
         Entry, verbose_name=_("entry"), on_delete=models.CASCADE, related_name="versions"
     )
     label = models.CharField(
@@ -208,7 +210,7 @@ class Version(models.Model):
         return loaded is not None and loaded != self._target()
 
     def get_file_url(self):
-        return reverse("docshelf:version_file", args=[self.entry.slug, self.pk, self.filename])
+        return get_router().version_file(self)
 
     @property
     def filename(self):

@@ -374,6 +374,7 @@ source = { editable = "." }
 dependencies = [
     { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
     { name = "django", version = "6.1.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "django-modelcluster" },
     { name = "django-treebeard" },
 ]
 
@@ -395,7 +396,8 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "django", specifier = ">=5.2" },
-    { name = "django-treebeard", specifier = ">=4.8" },
+    { name = "django-modelcluster", specifier = ">=6.2" },
+    { name = "django-treebeard", specifier = ">=4.8,<6" },
     { name = "wagtail", marker = "extra == 'wagtail'", specifier = ">=7.0" },
 ]
 provides-extras = ["wagtail"]

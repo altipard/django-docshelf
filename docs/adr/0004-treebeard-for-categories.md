@@ -24,3 +24,6 @@ projects get no new dependency.
 
 - The version range must stay compatible with Wagtail's pin (Wagtail 8.0 requires
   `django-treebeard<6`).
+- django-treebeard 6 deprecates the class-level tree API (`Category.add_root()` etc.) in favour of
+  manager methods and removes it in 7. Wagtail still requires `<6`, so docshelf pins `<6` too and
+  switches to the manager API together with Wagtail.

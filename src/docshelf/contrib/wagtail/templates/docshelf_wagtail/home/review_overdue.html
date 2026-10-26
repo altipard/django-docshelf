@@ -1,0 +1,23 @@
+{% load i18n wagtailadmin_tags %}
+{% if entries %}
+  {% panel id="docshelf-review-overdue" heading=_("Documents due for review") classname="w-panel--dashboard" %}
+    <table class="listing listing--dashboard">
+      <thead class="w-sr-only">
+        <tr>
+          <th>{% translate "Entry" %}</th>
+          <th>{% translate "Review due" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in entries %}
+          <tr>
+            <td class="title">
+              <a href="{% url 'wagtailsnippets_docshelf_entry:edit' entry.pk %}">{{ entry.title }}</a>
+            </td>
+            <td>{{ entry.review_due|date:"SHORT_DATE_FORMAT" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endpanel %}
+{% endif %}

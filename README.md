@@ -16,8 +16,8 @@ docshelf models that page as a catalogue:
   as an archive.
 - **Stable URLs**: `/<slug>/` always resolves to the current version.
 - **Audiences**: public, signed-in users or selected groups, enforced when the file is served.
-- **Wagtail integration** (optional): snippets, chooser, StreamField block, rich text link
-  type and a library page.
+- **Wagtail integration** (optional): snippets, StreamField blocks, a library page and a
+  dashboard panel for documents due for review.
 
 ## Installation (local development only)
 
@@ -70,6 +70,17 @@ location /protected/docshelf/ {
 ```
 
 Override `docshelf/base.html` to render the pages inside the site layout.
+
+### Wagtail
+
+```python
+INSTALLED_APPS += ["docshelf", "docshelf.contrib.wagtail"]
+DOCSHELF_ROUTER = "docshelf.contrib.wagtail.routing.LibraryPageRouter"
+```
+
+Create a "Document library" page in the page tree; entries are managed under
+**Documents** in the Wagtail admin. `docshelf.contrib.wagtail.blocks.EntryBlock` and
+`CategoryBlock` place single documents or whole categories in any StreamField.
 
 ## Compatibility
 
