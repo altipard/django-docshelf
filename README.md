@@ -1,0 +1,62 @@
+# django-docshelf
+
+A document library for Django and Wagtail.
+
+> **Status: pre-alpha.** Concept stage, nothing is released yet. See [docs/concept.md](docs/concept.md).
+
+Many sites have a "Documents" or "Downloads" page that grows into a mix of uploaded PDFs,
+links to other sites and online forms, with "as of" dates maintained by hand. Replacing a
+file breaks links or silently drops the previous version.
+
+docshelf models that page as a catalogue:
+
+- **Entries** in a category tree. An entry is a file, an external link or an online form,
+  rendered the same way.
+- **Versions** per entry with validity dates and a change note. Old versions stay available
+  as an archive.
+- **Stable URLs**: `/<slug>/` always resolves to the current version.
+- **Audiences**: public, signed-in users or selected groups, enforced when the file is served.
+- **Wagtail integration** (optional): snippets, chooser, StreamField block, rich text link
+  type and a library page.
+
+## Installation (local development only)
+
+```bash
+git clone git@github.com:altipard/django-docshelf.git
+cd django-docshelf
+uv sync
+uv run pytest
+```
+
+In a project:
+
+```bash
+pip install -e ../django-docshelf            # Django only
+pip install -e "../django-docshelf[wagtail]" # with Wagtail integration
+```
+
+```python
+INSTALLED_APPS = [
+    # ...
+    "docshelf",
+    "docshelf.contrib.wagtail",  # Wagtail projects only
+]
+```
+
+## Compatibility
+
+| | Versions |
+|---|---|
+| Python | 3.10 – 3.14 |
+| Django | 5.2 LTS, 6.0, 6.1 |
+| Wagtail | 7.0 LTS, 8.0 |
+
+## Documentation
+
+- [Concept](docs/concept.md)
+- [Architecture decisions](docs/adr/)
+- [Contributing](CONTRIBUTING.md)
+
+## License
+
+BSD-3-Clause, see [LICENSE](LICENSE).

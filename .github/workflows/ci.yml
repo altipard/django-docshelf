@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - name: Check commit messages
+        if: github.event_name == 'pull_request'
+        run: uv run cz check --rev-range origin/${{ github.base_ref }}..HEAD
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { python: "3.10", toxenv: py310-dj52-wt70 }
+          - { python: "3.13", toxenv: py313-dj52-wt70 }
+          - { python: "3.10", toxenv: py310-dj52-wt80 }
+          - { python: "3.14", toxenv: py314-dj52-wt80 }
+          - { python: "3.12", toxenv: py312-dj60-wt80 }
+          - { python: "3.14", toxenv: py314-dj60-wt80 }
+          - { python: "3.12", toxenv: py312-dj61-wt80 }
+          - { python: "3.14", toxenv: py314-dj61-wt80 }
+          - { python: "3.14", toxenv: py314-dj61-nowagtail }
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - run: uvx --with tox-uv tox -e ${{ matrix.toxenv }}
