@@ -1,0 +1,377 @@
+# German translation of django-docshelf.
+# This file is distributed under the same license as django-docshelf (BSD-3-Clause).
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: django-docshelf\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin.py:38 contrib/wagtail/forms.py:58
+msgid "Fixed once saved. Add a new version instead."
+msgstr "Nach dem Speichern fest. Bitte eine neue Fassung anlegen."
+
+#: admin.py:61 admin.py:113
+msgid "status"
+msgstr "Status"
+
+#: admin.py:70
+msgid "review"
+msgstr "Wiedervorlage"
+
+#: admin.py:74
+msgid "Overdue"
+msgstr "Überfällig"
+
+#: admin.py:106 contrib/wagtail/wagtail_hooks.py:58
+msgid "Access"
+msgstr "Zugriff"
+
+#: admin.py:107 contrib/wagtail/wagtail_hooks.py:62
+msgid "Maintenance"
+msgstr "Pflege"
+
+#: apps.py:7
+msgid "Document library"
+msgstr "Dokumentenbibliothek"
+
+#: contrib/wagtail/apps.py:8
+msgid "Document library (Wagtail)"
+msgstr "Dokumentenbibliothek (Wagtail)"
+
+#: contrib/wagtail/blocks.py:42
+msgid "Document"
+msgstr "Dokument"
+
+#: contrib/wagtail/blocks.py:49
+msgid "Category"
+msgstr "Kategorie"
+
+#: contrib/wagtail/blocks.py:51
+msgid "Include subcategories"
+msgstr "Unterkategorien einschließen"
+
+#: contrib/wagtail/blocks.py:71
+msgid "Document category"
+msgstr "Dokumentkategorie"
+
+#: contrib/wagtail/forms.py:19 contrib/wagtail/wagtail_hooks.py:25
+msgid "Parent category"
+msgstr "Übergeordnete Kategorie"
+
+#: contrib/wagtail/forms.py:20
+msgid "Leave empty for a top-level category."
+msgstr "Leer lassen für eine Kategorie auf oberster Ebene."
+
+#: contrib/wagtail/models.py:16
+msgid "introduction"
+msgstr "Einleitung"
+
+#: contrib/wagtail/models.py:19
+msgid "root category"
+msgstr "Wurzelkategorie"
+
+#: contrib/wagtail/models.py:24
+msgid "Only list entries in this category and below. Empty lists all."
+msgstr "Nur Einträge dieser Kategorie und darunter anzeigen. Leer zeigt alle."
+
+#: contrib/wagtail/models.py:33
+msgid "document library"
+msgstr "Dokumentenbibliothek"
+
+#: contrib/wagtail/templates/docshelf_wagtail/home/review_overdue.html:3
+msgid "Documents due for review"
+msgstr "Dokumente zur Wiedervorlage"
+
+#: contrib/wagtail/templates/docshelf_wagtail/home/review_overdue.html:7
+msgid "Entry"
+msgstr "Eintrag"
+
+#: contrib/wagtail/templates/docshelf_wagtail/home/review_overdue.html:8
+msgid "Review due"
+msgstr "Wiedervorlage am"
+
+#: contrib/wagtail/wagtail_hooks.py:18
+msgid "Categories"
+msgstr "Kategorien"
+
+#: contrib/wagtail/wagtail_hooks.py:36
+msgid "Entries"
+msgstr "Einträge"
+
+#: contrib/wagtail/wagtail_hooks.py:42
+msgid "Kind"
+msgstr "Art"
+
+#: contrib/wagtail/wagtail_hooks.py:43
+#: templates/docshelf/entry_history.html:16
+msgid "Status"
+msgstr "Status"
+
+#: contrib/wagtail/wagtail_hooks.py:66
+#: templates/docshelf/includes/entry_card.html:24
+msgid "Versions"
+msgstr "Fassungen"
+
+#: contrib/wagtail/wagtail_hooks.py:86 templates/docshelf/base.html:6
+msgid "Documents"
+msgstr "Dokumente"
+
+#: kinds.py:62
+msgid "File"
+msgstr "Datei"
+
+#: kinds.py:63
+msgid "External link"
+msgstr "Externer Link"
+
+#: kinds.py:64
+msgid "Online form"
+msgstr "Online-Formular"
+
+#: models.py:21
+msgid "name"
+msgstr "Name"
+
+#: models.py:22 models.py:50
+msgid "slug"
+msgstr "Kurzname"
+
+#: models.py:23
+msgid "description"
+msgstr "Beschreibung"
+
+#: models.py:26 models.py:58
+msgid "category"
+msgstr "Kategorie"
+
+#: models.py:27
+msgid "categories"
+msgstr "Kategorien"
+
+#: models.py:34
+msgid "Public"
+msgstr "Öffentlich"
+
+#: models.py:35
+msgid "Signed-in users"
+msgstr "Angemeldete Nutzer"
+
+#: models.py:36
+msgid "Selected groups"
+msgstr "Ausgewählte Gruppen"
+
+#: models.py:48
+msgid "title"
+msgstr "Titel"
+
+#: models.py:53
+msgid "Part of the permanent link. Changing it breaks existing links."
+msgstr "Teil des festen Links. Eine Änderung macht bestehende Links ungültig."
+
+#: models.py:55
+msgid "summary"
+msgstr "Kurzbeschreibung"
+
+#: models.py:62
+msgid "kind"
+msgstr "Art"
+
+#: models.py:64
+msgid "audience"
+msgstr "Zielgruppe"
+
+#: models.py:68
+msgid "groups"
+msgstr "Gruppen"
+
+#: models.py:71
+msgid "Only used when the audience is 'Selected groups'."
+msgstr "Nur wirksam, wenn die Zielgruppe „Ausgewählte Gruppen“ ist."
+
+#: models.py:74
+msgid "issuer"
+msgstr "Herausgeber"
+
+#: models.py:77
+msgid "Who issues the document, e.g. 'Board' or 'Federal state'."
+msgstr "Wer das Dokument herausgibt, z. B. „Vorstand“ oder „Land“."
+
+#: models.py:80
+msgid "review due"
+msgstr "Wiedervorlage am"
+
+#: models.py:83
+msgid "Date by which the entry should be checked for being up to date."
+msgstr "Datum, bis zu dem der Eintrag auf Aktualität geprüft werden soll."
+
+#: models.py:85
+msgid "published"
+msgstr "veröffentlicht"
+
+#: models.py:86
+msgid "sort order"
+msgstr "Sortierung"
+
+#: models.py:87 models.py:159
+msgid "created at"
+msgstr "erstellt am"
+
+#: models.py:88
+msgid "updated at"
+msgstr "geändert am"
+
+#: models.py:94 models.py:138
+msgid "entry"
+msgstr "Eintrag"
+
+#: models.py:95
+msgid "entries"
+msgstr "Einträge"
+
+#: models.py:122
+msgid "Existing versions do not match this kind. Create a new entry."
+msgstr ""
+"Die vorhandenen Fassungen passen nicht zu dieser Art. Bitte einen neuen "
+"Eintrag anlegen."
+
+#: models.py:141
+msgid "label"
+msgstr "Bezeichnung"
+
+#: models.py:144
+msgid "For example 'Adopted by the general assembly on 2021-09-18'."
+msgstr "Zum Beispiel „Beschlossen von der Hauptversammlung am 18.09.2021“."
+
+#: models.py:147
+msgid "file"
+msgstr "Datei"
+
+#: models.py:153
+msgid "URL"
+msgstr "URL"
+
+#: models.py:154
+msgid "valid from"
+msgstr "gültig ab"
+
+#: models.py:155
+msgid "valid until"
+msgstr "gültig bis"
+
+#: models.py:156
+msgid "change note"
+msgstr "Änderungshinweis"
+
+#: models.py:157
+msgid "SHA-256"
+msgstr "SHA-256"
+
+#: models.py:158
+msgid "size"
+msgstr "Größe"
+
+#: models.py:162
+msgid "created by"
+msgstr "erstellt von"
+
+#: models.py:172
+msgid "version"
+msgstr "Fassung"
+
+#: models.py:173
+msgid "versions"
+msgstr "Fassungen"
+
+#: models.py:234
+msgid ""
+"The file or URL of an existing version cannot be changed. Add a new version."
+msgstr ""
+"Datei oder URL einer bestehenden Fassung lassen sich nicht ändern. Bitte "
+"eine neue Fassung anlegen."
+
+#: models.py:237
+msgid "Set either a file or a URL, not both."
+msgstr "Bitte entweder eine Datei oder eine URL angeben, nicht beides."
+
+#: models.py:244
+msgid "This kind needs a file."
+msgstr "Diese Art braucht eine Datei."
+
+#: models.py:246
+msgid "This kind needs a URL."
+msgstr "Diese Art braucht eine URL."
+
+#: models.py:248
+msgid "This kind links to a URL and takes no file."
+msgstr "Diese Art verlinkt auf eine URL und nimmt keine Datei."
+
+#: models.py:250
+msgid "Must not be before 'valid from'."
+msgstr "Darf nicht vor „gültig ab“ liegen."
+
+#: status.py:12 status.py:20
+msgid "Scheduled"
+msgstr "Geplant"
+
+#: status.py:13 status.py:21
+msgid "Current"
+msgstr "Aktuell"
+
+#: status.py:14
+msgid "Superseded"
+msgstr "Abgelöst"
+
+#: status.py:15 status.py:22
+msgid "Expired"
+msgstr "Abgelaufen"
+
+#: status.py:19
+msgid "No versions"
+msgstr "Keine Fassungen"
+
+#: templates/docshelf/entry_history.html:4
+#, python-format
+msgid "Versions of %(title)s"
+msgstr "Fassungen von %(title)s"
+
+#: templates/docshelf/entry_history.html:14
+msgid "Version"
+msgstr "Fassung"
+
+#: templates/docshelf/entry_history.html:15
+msgid "Valid"
+msgstr "Gültig"
+
+#: templates/docshelf/entry_history.html:17
+msgid "Changes"
+msgstr "Änderungen"
+
+#: templates/docshelf/entry_history.html:40
+msgid "No versions available."
+msgstr "Keine Fassungen vorhanden."
+
+#: templates/docshelf/includes/entry_card.html:18
+#, python-format
+msgid "as of %(date)s"
+msgstr "Stand %(date)s"
+
+#: templates/docshelf/includes/entry_card.html:20
+msgid "No longer valid"
+msgstr "Nicht mehr gültig"
+
+#: templates/docshelf/includes/sections.html:10
+msgid "Filter documents"
+msgstr "Dokumente filtern"
+
+#: templates/docshelf/includes/sections.html:24
+msgid "No documents match the filter."
+msgstr "Keine Dokumente passen zum Filter."
+
+#: templates/docshelf/includes/sections.html:49
+msgid "No documents available."
+msgstr "Keine Dokumente vorhanden."

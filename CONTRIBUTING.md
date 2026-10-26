@@ -20,6 +20,21 @@ All other types (`docs`, `chore`, `ci`, `test`, `refactor`, `style`, `build`) do
 - Body only when needed: why, rejected alternatives, side effects.
 - One logical change per commit.
 
+## Translations
+
+English and German ship with the package; CI fails when a string has no German translation.
+After changing translatable strings (needs gettext):
+
+```bash
+cd src/docshelf
+export PYTHONPATH=../.. DJANGO_SETTINGS_MODULE=tests.settings
+uv run django-admin makemessages -l de --ignore "migrations/*" --no-obsolete
+# translate the new entries in locale/de/LC_MESSAGES/django.po
+uv run django-admin compilemessages
+```
+
+Commit both `django.po` and `django.mo`.
+
 ## Decisions
 
 Architecture decisions are recorded in [docs/adr/](docs/adr/). ADRs are not rewritten;
