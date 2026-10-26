@@ -1,0 +1,28 @@
+{% load i18n %}{% get_current_language as LANGUAGE_CODE %}<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% translate "Documents" %}{% endblock %} · docshelf demo</title>
+  {% comment %}Example of overriding docshelf/base.html: the project's own layout and styles.{% endcomment %}
+  <style>
+    body { font: 16px/1.5 system-ui, sans-serif; max-width: 52rem; margin: 2rem auto; padding: 0 1rem; color: #1f2933; }
+    header { display: flex; justify-content: space-between; border-bottom: 1px solid #d9e2ec; margin-bottom: 1.5rem; }
+    .docshelf-section h2 { border-bottom: 1px solid #d9e2ec; padding-bottom: .25rem; }
+    .docshelf-entry { padding: .75rem 0; border-bottom: 1px solid #f0f4f8; }
+    .docshelf-entry__title { margin: 0; font-size: 1.05rem; }
+    .docshelf-entry__summary { margin: .25rem 0; }
+    .docshelf-entry__meta { margin: 0; color: #52606d; font-size: .9rem; }
+    .docshelf-filter input { width: 100%; padding: .4rem; font: inherit; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: .4rem; border-bottom: 1px solid #d9e2ec; vertical-align: top; }
+  </style>
+</head>
+<body>
+<header>
+  <p><strong>docshelf demo</strong></p>
+  <p><a href="/documents/">{% translate "Documents" %}</a> · <a href="/admin/">Admin</a></p>
+</header>
+{% block docshelf_content %}{% endblock %}
+</body>
+</html>

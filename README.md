@@ -92,6 +92,7 @@ Create a "Document library" page in the page tree; entries are managed under
 
 ## Documentation
 
+- [Demo site](demo/README.md)
 - [Concept](docs/concept.md)
 - [Architecture decisions](docs/adr/)
 - [Contributing](CONTRIBUTING.md)

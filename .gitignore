@@ -13,3 +13,6 @@ htmlcov/
 /media/
 /private-media/
 .DS_Store
+/demo/db.sqlite3
+/demo/media/
+/demo/private-media/
