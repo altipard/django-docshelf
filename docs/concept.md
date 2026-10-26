@@ -164,24 +164,36 @@ a separate storage, by default outside `MEDIA_ROOT` (ADR-0003).
 
 ## Import
 
-`manage.py docshelf_import` brings existing documents into the catalogue. Sources:
+`manage.py docshelf_import` brings existing documents into the catalogue.
 
-- `csv`: one row per version (`entry_slug`, `title`, `category_path`, `kind`, `file` or `url`,
-  `valid_from`, `valid_until`, `label`, `change_note`, `audience`). Rows with the same
-  `entry_slug` become versions of one entry. Missing categories are created along the path
-  (`Club/Statutes & rules`).
-- `wagtaildocs` (only with the Wagtail integration): selected Wagtail documents by ID,
-  collection or tag. The file is **copied** into docshelf storage; the Wagtail document stays
-  untouched.
+```bash
+manage.py docshelf_import csv documents.csv [--base-dir DIR]
+manage.py docshelf_import wagtaildocs --ids 13 14 --category "Club/Statutes"
+manage.py docshelf_import wagtaildocs --collection "Club documents" --emit-csv docs.csv
+```
+
+- `csv`: one row per version with the columns `entry_slug`, `title`, `category_path`, `kind`,
+  `file`, `url`, `valid_from`, `valid_until`, `label`, `change_note`, `audience`, `summary`,
+  `issuer`, `old_url`. Rows with the same `entry_slug` become versions of one entry; entry
+  fields are only read from the first row of a new entry. Missing categories are created
+  along the path (`Club/Statutes & rules`). `file` is a path relative to the CSV or
+  `wagtaildoc:<id>`.
+- `wagtaildocs` (only with Wagtail): one entry per selected document (`--ids`, `--collection`,
+  `--tag`). The file is **copied** into docshelf storage; the Wagtail document stays untouched.
+  `--emit-csv` writes the rows instead of importing them, so they can be edited first (merge
+  documents into versions of one entry, set categories and dates) and imported with `csv`.
 
 Behaviour:
 
-- `--dry-run` prints what would happen, without writing.
-- Idempotent: an entry is matched by slug, a version by entry and content hash of the file
-  (or URL), so a second run creates nothing new.
-- `--redirects FILE` writes a mapping old URL → permalink (CSV) for the project's redirect
-  mechanism (`django.contrib.redirects`, `wagtail.contrib.redirects` or the web server). The
-  command does not create redirects itself.
+- Two phases: every row is validated before anything is written. One invalid row aborts the
+  whole import, no categories, entries or files are created.
+- `--dry-run` runs the validation only.
+- Idempotent: an entry is matched by slug, a version by entry and SHA-256 of the file (or URL),
+  so a second run creates nothing. Existing entries get new versions, their fields are not
+  changed.
+- `--redirects FILE` writes `old_url,new_url` pairs (old URL from the `old_url` column, for
+  Wagtail documents their serve URL) for the project's redirect mechanism. The command does not
+  create redirects itself.
 
 ## Internationalisation
 
