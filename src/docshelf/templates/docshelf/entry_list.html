@@ -1,0 +1,49 @@
+{% extends "docshelf/base.html" %}
+{% load i18n %}
+
+{% block docshelf_content %}
+<div class="docshelf" data-docshelf>
+  {% if sections %}
+    <p class="docshelf-filter" hidden>
+      <label for="docshelf-filter">{% translate "Filter documents" %}</label>
+      <input id="docshelf-filter" type="search" autocomplete="off">
+    </p>
+    {% for category, entries in sections %}
+      <section class="docshelf-section" data-docshelf-section aria-labelledby="docshelf-{{ category.slug }}">
+        <h2 id="docshelf-{{ category.slug }}">{{ category.name }}</h2>
+        {% if category.description %}<p>{{ category.description }}</p>{% endif %}
+        {% for entry in entries %}
+          {% include "docshelf/includes/entry_card.html" %}
+        {% endfor %}
+      </section>
+    {% endfor %}
+    <p class="docshelf-empty" data-docshelf-empty hidden>{% translate "No documents match the filter." %}</p>
+  {% else %}
+    <p class="docshelf-empty">{% translate "No documents available." %}</p>
+  {% endif %}
+</div>
+
+<script>
+(function () {
+  var root = document.querySelector("[data-docshelf]");
+  var input = root && root.querySelector("#docshelf-filter");
+  if (!input) return;
+  input.parentNode.hidden = false;
+  input.addEventListener("input", function () {
+    var term = input.value.trim().toLowerCase();
+    var any = false;
+    root.querySelectorAll("[data-docshelf-section]").forEach(function (section) {
+      var visible = 0;
+      section.querySelectorAll("[data-docshelf-entry]").forEach(function (entry) {
+        var match = !term || entry.getAttribute("data-docshelf-entry").indexOf(term) !== -1;
+        entry.hidden = !match;
+        if (match) visible++;
+      });
+      section.hidden = visible === 0;
+      if (visible) any = true;
+    });
+    root.querySelector("[data-docshelf-empty]").hidden = any;
+  });
+})();
+</script>
+{% endblock %}

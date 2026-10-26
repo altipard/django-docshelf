@@ -1,0 +1,26 @@
+{% load i18n %}
+<article class="docshelf-entry docshelf-entry--{{ entry.kind }}" data-docshelf-entry="{{ entry.title|lower }} {{ entry.summary|lower }} {{ entry.issuer|lower }}">
+  <h3 class="docshelf-entry__title">
+    {% if entry.current %}
+      <a href="{{ entry.get_absolute_url }}"{% if not entry.kind_obj.needs_file %} rel="external"{% endif %}>{{ entry.title }}</a>
+    {% else %}
+      {{ entry.title }}
+    {% endif %}
+  </h3>
+  {% if entry.summary %}<p class="docshelf-entry__summary">{{ entry.summary }}</p>{% endif %}
+  <p class="docshelf-entry__meta">
+    {% if entry.current %}
+      {% if entry.kind_obj.needs_file %}
+        <span class="docshelf-entry__format">{{ entry.current.extension }}{% if entry.current.size %} · {{ entry.current.size|filesizeformat }}{% endif %}</span>
+      {% else %}
+        <span class="docshelf-entry__format">{{ entry.kind_obj.label }} ↗ {{ entry.current.url_host }}</span>
+      {% endif %}
+      · <span class="docshelf-entry__date">{% blocktranslate with date=entry.current.valid_from|date:"SHORT_DATE_FORMAT" %}as of {{ date }}{% endblocktranslate %}</span>
+    {% else %}
+      <span class="docshelf-entry__status">{% translate "No longer valid" %}</span>
+    {% endif %}
+    {% if entry.issuer %} · <span class="docshelf-entry__issuer">{{ entry.issuer }}</span>{% endif %}
+    {% if entry.audience != "public" %} · <span class="docshelf-entry__audience">{{ entry.get_audience_display }}</span>{% endif %}
+    · <a class="docshelf-entry__history" href="{{ entry.get_history_url }}">{% translate "Versions" %}</a>
+  </p>
+</article>

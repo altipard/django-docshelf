@@ -1,10 +1,12 @@
 import hashlib
 import os
+from urllib.parse import urlsplit
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import F, Q
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from treebeard.mp_tree import MP_Node
@@ -92,6 +94,12 @@ class Entry(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("docshelf:permalink", args=[self.slug])
+
+    def get_history_url(self):
+        return reverse("docshelf:history", args=[self.slug])
 
     @property
     def kind_obj(self):
@@ -199,9 +207,22 @@ class Version(models.Model):
         loaded = getattr(self, "_loaded_target", None)
         return loaded is not None and loaded != self._target()
 
+    def get_file_url(self):
+        return reverse("docshelf:version_file", args=[self.entry.slug, self.pk, self.filename])
+
     @property
     def filename(self):
         return os.path.basename(self.file.name) if self.file else ""
+
+    @property
+    def extension(self):
+        return os.path.splitext(self.filename)[1].lstrip(".").upper()
+
+    @property
+    def url_host(self):
+        if not self.url:
+            return ""
+        return urlsplit(self.url).hostname or ""
 
     def clean(self):
         super().clean()

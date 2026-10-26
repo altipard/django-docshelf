@@ -113,7 +113,8 @@ lookup, so renaming never breaks it. A JSON variant of the list is planned, not 
 ## Access
 
 `audience` per entry: `public`, `authenticated` or `groups`. The check runs in the list
-(hidden or marked), on the permalink and on every file download.
+(entries the user may not see are left out), on the permalink, the history and every file
+download. Scheduled versions are never listed or served.
 
 Custom rules via `DOCSHELF_ACCESS_POLICY`, a class with
 `can_view(user, entry) -> bool` and `filter_queryset(user, queryset)`. Anonymous users who

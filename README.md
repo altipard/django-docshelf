@@ -43,6 +43,34 @@ INSTALLED_APPS = [
 ]
 ```
 
+```python
+# urls.py
+urlpatterns = [
+    path("documents/", include("docshelf.urls")),
+]
+
+# settings.py: keep files out of MEDIA_ROOT so access rules cannot be bypassed
+STORAGES = {
+    # ...
+    "docshelf": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {"location": BASE_DIR / "private-media" / "docshelf"},
+    },
+}
+DOCSHELF_SERVE_BACKEND = "x-accel"  # default "django"
+```
+
+With `x-accel`, nginx delivers the file after Django has checked access:
+
+```nginx
+location /protected/docshelf/ {
+    internal;
+    alias /srv/app/private-media/docshelf/;
+}
+```
+
+Override `docshelf/base.html` to render the pages inside the site layout.
+
 ## Compatibility
 
 | | Versions |

@@ -1,0 +1,43 @@
+{% extends "docshelf/base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktranslate with title=entry.title %}Versions of {{ title }}{% endblocktranslate %}{% endblock %}
+
+{% block docshelf_content %}
+<div class="docshelf docshelf-history">
+  <h1>{{ entry.title }}</h1>
+  {% if entry.summary %}<p>{{ entry.summary }}</p>{% endif %}
+  {% if rows %}
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Version" %}</th>
+          <th scope="col">{% translate "Valid" %}</th>
+          <th scope="col">{% translate "Status" %}</th>
+          <th scope="col">{% translate "Changes" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for version, status in rows %}
+          <tr class="docshelf-history__row docshelf-history__row--{{ status }}">
+            <td>
+              {% if version.file %}
+                <a href="{{ version.get_file_url }}">{{ version.label|default:version.filename }}</a>
+              {% else %}
+                <a href="{{ version.url }}" rel="external">{{ version.label|default:version.url_host }}</a>
+              {% endif %}
+            </td>
+            <td>
+              {{ version.valid_from|date:"SHORT_DATE_FORMAT" }}{% if version.valid_until %} – {{ version.valid_until|date:"SHORT_DATE_FORMAT" }}{% endif %}
+            </td>
+            <td>{{ status.label }}</td>
+            <td>{{ version.change_note|linebreaksbr }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>{% translate "No versions available." %}</p>
+  {% endif %}
+</div>
+{% endblock %}
